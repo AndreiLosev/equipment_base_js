@@ -1,0 +1,8 @@
+{
+    "host": "127.0.0.1",
+    "port": "4000",
+    "db_path": "./equipment_base_js.db",
+    "front_end": "../front/build",
+    "error_log_path": "error_log.txt",
+    "log_path": "log.txt"
+}

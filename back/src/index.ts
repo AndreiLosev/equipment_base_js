@@ -7,6 +7,7 @@ const config = JSON.parse(readFileSync('app_config.json').toString()) as {
     host: string,
     port: number,
     db_path: string,
+    front_end: string,
     err_log_path: string,
     log_path: string,
 }
