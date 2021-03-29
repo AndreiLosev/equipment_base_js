@@ -1,0 +1,4 @@
+node_modules
+*.db
+*.txt
+app_config.json
