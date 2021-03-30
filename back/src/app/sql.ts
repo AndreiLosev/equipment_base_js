@@ -4,7 +4,7 @@ import { table } from 'node:console'
 const conn = sqlite('equipments.db')
 
 const sql = (table_name: string) => `
-CREATE VIRTUAL TABLE ${table_name} (
+CREATE TABLE ${table_name} (
 	"id"	INTEGER NOT NULL UNIQUE,
 	"No"	INTEGER NOT NULL,
 	"validation_cost"	INTEGER,
@@ -44,8 +44,9 @@ const sql1 = 'SELECT name FROM sqlite_master WHERE type="table"'
 // 	SELECT * FROM test_table
 // `
 
-const xx = conn.prepare(sql('test_v')).run()
-console.log(xx)
+const x1 = conn.prepare(sql('test_v')).run()
+const x2 = conn.prepare(v_sql('test_v')).run()
+console.log(x1, x2)
 // conn.all(sql1, (err, result) => {
 // 	let x = result.filter(i => i.name !== 'sqlite_sequence')
 // 	console.log(x)
