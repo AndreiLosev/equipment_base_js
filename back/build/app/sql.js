@@ -3,11 +3,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var better_sqlite3_1 = __importDefault(require("better-sqlite3"));
-var conn = better_sqlite3_1.default('equipments.db');
-var sql = function (table_name) { return "\nCREATE TABLE " + table_name + " (\n\t\"id\"\tINTEGER NOT NULL UNIQUE,\n\t\"No\"\tINTEGER NOT NULL,\n\t\"validation_cost\"\tINTEGER,\n\t\"last_verification_date\"\tINTEGER,\n\t\"checking_manometers\"\tINTEGER,\n\t\"next_verification_date\"\tINTEGER,\n\t\"actual\" INTEGER,\n\tPRIMARY KEY(\"id\" AUTOINCREMENT)\n);\n"; };
-var v_sql = function (table_name) { return "\nCREATE VIRTUAL TABLE v_" + table_name + " USING fts5(\n\tid, doc_title, manufacturer, validation_place,\n\tinventory_number, k_v_a, no_certificate, notes\n);\n"; };
-var sql1 = 'SELECT name FROM sqlite_master WHERE type="table"';
+const better_sqlite3_1 = __importDefault(require("better-sqlite3"));
+const conn = better_sqlite3_1.default('equipments.db');
+const sql = (table_name) => `
+CREATE TABLE ${table_name} (
+	"id"	INTEGER NOT NULL UNIQUE,
+	"No"	INTEGER NOT NULL,
+	"validation_cost"	INTEGER,
+	"last_verification_date"	INTEGER,
+	"checking_manometers"	INTEGER,
+	"next_verification_date"	INTEGER,
+	"actual" INTEGER,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);
+`;
+const v_sql = (table_name) => `
+CREATE VIRTUAL TABLE v_${table_name} USING fts5(
+	id, doc_title, manufacturer, validation_place,
+	inventory_number, k_v_a, no_certificate, notes
+);
+`;
+const sql1 = `SELECT name FROM sqlite_master WHERE type="table"`;
 // conn.run(sql2('virtual_test'), err => console.log(err))
 // const sql3 = `
 // CREATE TABLE test_table (
@@ -24,8 +40,8 @@ var sql1 = 'SELECT name FROM sqlite_master WHERE type="table"';
 // const sql5 = `
 // 	SELECT * FROM test_table
 // `
-var x1 = conn.prepare(sql('test_v')).run();
-var x2 = conn.prepare(v_sql('test_v')).run();
+const x1 = conn.prepare(sql('test_v')).run();
+const x2 = conn.prepare(v_sql('test_v')).run();
 console.log(x1, x2);
 // conn.all(sql1, (err, result) => {
 // 	let x = result.filter(i => i.name !== 'sqlite_sequence')

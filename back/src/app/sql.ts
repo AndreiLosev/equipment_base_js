@@ -22,7 +22,7 @@ CREATE VIRTUAL TABLE v_${table_name} USING fts5(
 );
 `
 
-const sql1 = 'SELECT name FROM sqlite_master WHERE type="table"'
+const sql1 = `SELECT name FROM sqlite_master WHERE type="table"`
 
 // conn.run(sql2('virtual_test'), err => console.log(err))
 
