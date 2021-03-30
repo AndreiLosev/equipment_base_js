@@ -96,6 +96,7 @@ export class DB {
 
     public search_by_integer(table_name: string, mode: '<=' | '>=' | '=', column: string, value: number) {
         return Result.try(() => {
+            // SELECT * FROM test_table JOIN v_test_table ON test_table.id = v_test_table.id and test_table.id > 7
             this.db.transaction(() => {
                 const result = this.db.prepare(`SELECT * FROM ${table_name} WHERE ${table_name}.${column} ${mode} ${value}`)
                     .all() as TEquipmentNumber[]                
