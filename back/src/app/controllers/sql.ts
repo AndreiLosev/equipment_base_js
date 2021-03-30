@@ -94,7 +94,14 @@ export class DB {
         })
     }
 
-    public search_by_integer(table_name: string, mode: '<=' | '>=' | '=', value: number) {
-        
+    public search_by_integer(table_name: string, mode: '<=' | '>=' | '=', column: string, value: number) {
+        return Result.try(() => {
+            this.db.transaction(() => {
+                const result = this.db.prepare(`SELECT * FROM ${table_name} WHERE ${table_name}.${column} ${mode} ${value}`)
+                    .all() as TEquipmentNumber[]                
+            })
+        })
     }
+
+    public search_by_string(table_name: string, pattern: string, column: string) {}
 }

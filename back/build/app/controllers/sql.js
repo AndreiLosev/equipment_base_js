@@ -84,7 +84,14 @@ class DB {
             return {};
         });
     }
-    search_by_integer(table_name, mode, value) {
+    search_by_integer(table_name, mode, column, value) {
+        return result_1.Result.try(() => {
+            this.db.transaction(() => {
+                const result = this.db.prepare(`SELECT * FROM ${table_name} WHERE ${table_name}.${column} ${mode} ${value}`)
+                    .all();
+            });
+        });
     }
+    search_by_string(table_name, pattern, column) { }
 }
 exports.DB = DB;
