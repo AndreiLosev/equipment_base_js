@@ -7,27 +7,27 @@ export class DB {
         private db: Database
     ) {}
 
-    private get_columns_and_values_for_sql_query(data: TEquipmentNumber | TEquipmentString, id: "id_add" | 'id_remove') {
+    private get_columns_and_values_for_sql_query(
+        data: TEquipmentNumber | TEquipmentString, id: "id_add" | 'id_remove' | 'nothing',
+    ) {
         const columns = id == 'id_remove'
             ? Object.keys(data).filter(i => i !== 'id')
-            : [...Object.keys(data), 'id']
+            : id == 'id_add' ? [...Object.keys(data), 'id'] : Object.keys(data)
         const values = columns.map(i => `@${i}`)
         return {columns, values}
     }
 
     public get_tables() {
-        try {
-            const res = this.db.prepare<{name: string}[]>(`SELECT name FROM sqlite_master WHERE type='table'`)
+        return Result.try<string[]>(() => {
+            return this.db.prepare<{name: string}[]>(`SELECT name FROM sqlite_master WHERE type='table'`)
                 .all().map((i: {name: string}) => i.name)
                 .filter(i => !((i == 'sqlite_sequence') || (i.includes('v_'))))
-            return new Result(res)
-        } catch (err) {
-            return new Result<string[]>(err)
-        }
+            })
+
     }
 
     public create_table(table_name: string) {
-        try {
+        return Result.try(() => {
             this.db.transaction(() => {
                 this.db.prepare(`
                 CREATE TABLE ${table_name} (
@@ -48,14 +48,12 @@ export class DB {
                 );
                 `).run()
             })()
-            return new Result(null)
-        } catch (err) {
-            return new Result<null>(err) //TODO
-        }
+            return {}
+        })
     }
 
-    public set_data(table_name: string, data: TEquipmentNumber, v_data: TEquipmentString) {
-        try {
+    public set(table_name: string, data: TEquipmentNumber, v_data: TEquipmentString) {
+        return Result.try(() => {
             const {columns, values} = this.get_columns_and_values_for_sql_query(data, 'id_remove')
             const insert = this.db.prepare(`INSERT INTO ${table_name} (${columns.toString()}) VALUES (${values.toString()})`)
             this.db.transaction(() => {
@@ -63,49 +61,40 @@ export class DB {
                 const {columns, values} = this.get_columns_and_values_for_sql_query(v_data, 'id_add')
                 const v_data_with_id = Object.assign(v_data, {id: lastInsertRowid})
                 this.db.prepare(`INSERT INTO v_${table_name} (${columns.toString()}) VALUES (${values.toString()})`)
-                .run(v_data_with_id)
+                    .run(v_data_with_id)
             })()
-            return new Result(null)
-        } catch (err) {
-            return new Result<null>(err) //TODO
-        }
+            return {}
+        })
     }
 
-    public update_data(table_name: string, data: TEquipmentNumber, v_data: TEquipmentString) {
-        try {
-            
-        } catch (error) {
-            
-        }
+    public update(table_name: string, data: TEquipmentNumber, v_data: TEquipmentString) {
+        return Result.try(() => {
+            const id = data.id
+            const {columns, values} = this.get_columns_and_values_for_sql_query(data, 'id_remove')
+            const for_query = columns.map((_, i) => `${columns[i]} = ${values[i]}`)
+            const insert = this.db.prepare(`UPDATE ${table_name} SET ${for_query.toString()} WHERE ${table_name}.id = ${id}`)
+            this.db.transaction(() => {
+                insert.run(data)
+                const {columns, values} = this.get_columns_and_values_for_sql_query(v_data, 'nothing')
+                const for_query = columns.map((_, i) => `${columns[i]} = ${values[i]}`)
+                this.db.prepare(`UPDATE v_${table_name} SET ${for_query.toString()} WHERE v_${table_name}.id = ${id}`)
+                    .run(v_data)
+            })()
+            return {}
+        })
     }
 
-//     public delete_data(table_name: string, data: TEquipment): Promise<void> {
-//         return new Promise((resolve, reject) => {
-//             const query = SqlQuery.delete_data(table_name, data)
-//             this.db.run(query, err => err ? reject(err) : resolve())
-//         })
-//     }
-}
-
-
-export class SqlQuery {
-
-
-    static set_data = (table_name: string, columns: string[], v_columns: string[]) => {
-        const query = `INSERT INTO ${table_name} (${columns.toString()}) VALUES (${columns.map(i => `@${i}`).toString()})`
-        const v_query = `INSERT INTO ${table_name} (${columns.toString()}) VALUES (${columns.map(i => `@${i}`).toString()})`
-        return  
+    public delete(table_name: string, id: number) {
+        return Result.try(() => {
+            this.db.transaction(() => {
+                this.db.prepare(`DELETE FROM ${table_name} WHERE ${table_name}.id = ${id};`).run()
+                this.db.prepare(`DELETE FROM v_${table_name} WHERE v_${table_name}.id = ${id};`).run()
+            })()
+            return {}
+        })
     }
 
-    // static update_data = (table_name: string, data: TEquipment) => {
-    //     const id = data.id
-    //     const {columns, values} = TEquipment_to_columns_and_values_without_id(data)
-    //     const result = columns.map((_, i) => `${columns[i]} = ${values[i]}`)
-    //     return `UPDATE ${table_name} SET ${result.toString()} WHERE ${table_name}.id = ${id}`
-    // }
-
-    // static delete_data = (table_name: string, data: TEquipment) => {
-    //     const id = data.id
-    //     return `DELETE FROM ${table_name} WHERE ${table_name}.id = ${id};`
-    // }
+    public search_by_integer(table_name: string, mode: '<=' | '>=' | '=', value: number) {
+        
+    }
 }
