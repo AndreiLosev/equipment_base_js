@@ -44,6 +44,9 @@ class DB {
             return {};
         });
     }
+    get(table_name) {
+        return result_1.Result.try(() => this.db.prepare(`SELECT * FROM ${table_name}`).all());
+    }
     set(table_name, data) {
         return result_1.Result.try(() => {
             const { columns, values } = this.get_columns_and_values_for_sql_query(data, 'id_remove');

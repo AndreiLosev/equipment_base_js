@@ -21,4 +21,17 @@ export const NumKeys = ['id', 'No', 'validation_cost', 'next_verification_date',
 
 export const StrKeys = ['doc_title', 'manufacturer', 'validation_place', 'k_v_a', 'no_certificate', 'notes'] as const
 
-export type TCreate_table = {table_name: string}
+export type TatableName = {table_name: string}
+
+export type Search_by_num = {
+    table_name: string,
+    column: typeof NumKeys[number],
+    mode: '<=' | '>=' | '=',
+    value: number,
+}
+
+export type Search_by_str = {
+    table_name: string,
+    column: typeof StrKeys[number],
+    pattern: string
+}

@@ -8,15 +8,11 @@ class Result {
     isOk() { return !(this.value instanceof Error); }
     get_as_Ok() { return this.value; }
     get_as_Err() { return this.value; }
-    static try(fn, try_log, catch_log) {
+    static try(fn) {
         try {
-            if (try_log)
-                try_log();
             return new Result(fn());
         }
         catch (err) {
-            if (catch_log)
-                catch_log();
             return new Result(err);
         }
     }

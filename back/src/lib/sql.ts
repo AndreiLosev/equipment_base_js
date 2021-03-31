@@ -51,6 +51,10 @@ export class DB {
         })
     }
 
+    public get(table_name: string) {
+        return Result.try(() => this.db.prepare(`SELECT * FROM ${table_name}`).all() as TEquipment[])
+    }
+
     public set(table_name: string, data: TEquipment) {
         return Result.try(() => {
             const {columns, values} = this.get_columns_and_values_for_sql_query(data, 'id_remove')
