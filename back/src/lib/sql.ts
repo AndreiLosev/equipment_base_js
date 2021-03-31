@@ -1,4 +1,4 @@
-import sqlite, {Database} from 'better-sqlite3'
+import {Database} from 'better-sqlite3'
 import {Result} from './result'
 import {TEquipment, NumKeys, StrKeys} from '../app/models'
 
@@ -19,11 +19,11 @@ export class DB {
 
     public get_tables() {
         return Result.try<string[]>(() => {
-            return this.db.prepare<{name: string}[]>(`SELECT name FROM sqlite_master WHERE type='table'`)
-                .all().map((i: {name: string}) => i.name)
+            return this.db.prepare<{name: string}[]>(
+                `SELECT name FROM sqlite_master WHERE type='table'`,
+            ).all().map((i: {name: string}) => i.name)
                 .filter(i => !(i == 'sqlite_sequence'))
             })
-
     }
 
     public create_table(table_name: string) {
@@ -68,7 +68,7 @@ export class DB {
             const id = data.id
             const {columns, values} = this.get_columns_and_values_for_sql_query(data, 'id_remove')
             const for_query = columns.map((_, i) => `${columns[i]} = ${values[i]}`)
-            let x = this.db.prepare(`UPDATE ${table_name} SET ${for_query.toString()} WHERE ${table_name}.id = ${id}`).run(data)
+            this.db.prepare(`UPDATE ${table_name} SET ${for_query.toString()} WHERE ${table_name}.id = ${id}`).run(data)
             return {}
         })
     }
