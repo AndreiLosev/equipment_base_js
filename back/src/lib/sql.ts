@@ -3,9 +3,12 @@ import {Result} from './result'
 import {TEquipment, NumKeys, StrKeys} from '../app/models'
 
 export class DB {
-    constructor(
-        private db: Database
-    ) {}
+    
+    private db: Database
+
+    constructor(db: Database) {
+        this.db = db
+    }
 
     private get_columns_and_values_for_sql_query(
         data: TEquipment, id: "id_add" | 'id_remove' | 'nothing',
@@ -47,19 +50,23 @@ export class DB {
                     PRIMARY KEY("id" AUTOINCREMENT)
                     );
                 `).run()
-            return {}
+            return null
         })
     }
 
     public get(table_name: string) {
-        return Result.try(() => this.db.prepare(`SELECT * FROM ${table_name}`).all() as TEquipment[])
+        return Result.try(
+            () => this.db.prepare(`SELECT * FROM ${table_name}`).all() as TEquipment[]
+        )
     }
 
     public set(table_name: string, data: TEquipment) {
         return Result.try(() => {
             const {columns, values} = this.get_columns_and_values_for_sql_query(data, 'id_remove')
-            this.db.prepare(`INSERT INTO ${table_name} (${columns.toString()}) VALUES (${values.toString()})`).run(data)
-            return {}
+            this.db.prepare(
+                `INSERT INTO ${table_name} (${columns.toString()}) VALUES (${values.toString()})`,
+            ).run(data)
+            return null
         })
     }
 
@@ -68,19 +75,23 @@ export class DB {
             const id = data.id
             const {columns, values} = this.get_columns_and_values_for_sql_query(data, 'id_remove')
             const for_query = columns.map((_, i) => `${columns[i]} = ${values[i]}`)
-            this.db.prepare(`UPDATE ${table_name} SET ${for_query.toString()} WHERE ${table_name}.id = ${id}`).run(data)
-            return {}
+            this.db.prepare(
+                `UPDATE ${table_name} SET ${for_query.toString()} WHERE ${table_name}.id = ${id}`,
+            ).run(data)
+            return null
         })
     }
 
     public delete(table_name: string, id: number) {
         return Result.try(() => {
             this.db.prepare(`DELETE FROM ${table_name} WHERE ${table_name}.id = ${id};`).run()
-            return {}
+            return null
         })
     }
 
-    public get_by_num(table_name: string, column: typeof NumKeys[number], mode: '<=' | '>=' | '=', value: number) {
+    public get_by_num(
+        table_name: string, column: typeof NumKeys[number], mode: '<=' | '>=' | '=', value: number,
+    ) {
         return Result.try(() => {
             return this.db.prepare(
                 `SELECT * FROM ${table_name} WHERE  ${table_name}.${column} ${mode} ${value}`

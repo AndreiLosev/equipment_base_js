@@ -9,7 +9,7 @@ export const logging = (try_path: string, catch_path: string) =>
                     time: new Date().toLocaleString(),
                     metod: req.method,
                     Request_query: req.query,
-                    Request_body: req.body,
+                    Request_body: req.body as unknown,
                     Respons: res,
                 }
                 await appendFile(try_path, `${JSON.stringify(text)}\n`)

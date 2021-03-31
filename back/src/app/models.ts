@@ -17,9 +17,13 @@ export type TEquipment = {
 
 export type TEquipmentKeys = keyof TEquipment
 
-export const NumKeys = ['id', 'No', 'validation_cost', 'next_verification_date', 'next_verification_date', 'actual'] as const
+export const NumKeys = [
+    'id', 'No', 'validation_cost', 'next_verification_date', 'next_verification_date', 'actual',
+] as const
 
-export const StrKeys = ['doc_title', 'manufacturer', 'validation_place', 'k_v_a', 'no_certificate', 'notes'] as const
+export const StrKeys = [
+    'doc_title', 'manufacturer', 'validation_place', 'k_v_a', 'no_certificate', 'notes',
+] as const
 
 export type TatableName = {table_name: string}
 
