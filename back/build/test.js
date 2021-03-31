@@ -10,28 +10,27 @@ const table_name = 'test_table';
 // let x = conn.create_table(table_name)
 // let x = conn.get_tables()
 let data = {
-    id: 10,
-    No: 5,
-    validation_cost: 6,
-    last_verification_date: Date.now() - 7,
-    checking_manometers: 8,
-    next_verification_date: Date.now() + 9,
+    id: 3,
+    No: 45,
+    validation_cost: 100,
+    last_verification_date: Date.now() - 11,
+    checking_manometers: 12,
+    next_verification_date: Date.now() + 13,
     actual: 1,
+    doc_title: 'cdfff',
+    manufacturer: 'ghiff',
+    validation_place: 'aagkl',
+    inventory_number: 'aamno',
+    k_v_a: 'pqr!!',
+    no_certificate: 'suv',
+    notes: 'wxy!!',
 };
-let v_data = {
-    doc_title: 'abc',
-    manufacturer: 'dfg',
-    validation_place: 'hig',
-    inventory_number: 'klm',
-    k_v_a: 'nop',
-    no_certificate: 'qrs',
-    notes: 'uvw',
-};
-// let x = conn.set(table_name, data, v_data)
-// let x = conn.update(table_name, data, v_data)
-let x = conn.delete(table_name, data.id);
-console.log({
-    err_mes: x.get_as_Err().message,
-    as_ok: x.get_as_Ok(),
-    is_ok: x.isOk(),
-});
+// let x = conn.set(table_name, data)
+// let x = conn.update(table_name, data)
+// let x = conn.delete(table_name, data.id)
+// let x = conn.get_by_str(table_name, 'doc_title', 'df')
+// console.log({
+//     err_mes: x.get_as_Err().message,
+//     as_ok: x.get_as_Ok(),
+//     is_ok: x.isOk(),
+// })
