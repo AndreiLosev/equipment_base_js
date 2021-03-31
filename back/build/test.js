@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const sql_1 = require("./app/controllers/sql");
+const sql_1 = require("./lib/sql");
 const better_sqlite3_1 = __importDefault(require("better-sqlite3"));
 const conn = new sql_1.DB(better_sqlite3_1.default('test_db.db'));
 const table_name = 'test_table';

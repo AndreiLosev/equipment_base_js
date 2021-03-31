@@ -1,6 +1,6 @@
 import sqlite, {Database} from 'better-sqlite3'
 import {Result} from './result'
-import {TEquipment, NumKeys, StrKeys} from '../models'
+import {TEquipment, NumKeys, StrKeys} from '../app/models'
 
 export class DB {
     constructor(
@@ -93,3 +93,4 @@ export class DB {
         })
     }
 }
+ 

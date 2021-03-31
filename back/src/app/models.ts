@@ -21,3 +21,4 @@ export const NumKeys = ['id', 'No', 'validation_cost', 'next_verification_date',
 
 export const StrKeys = ['doc_title', 'manufacturer', 'validation_place', 'k_v_a', 'no_certificate', 'notes'] as const
 
+export type TCreate_table = {table_name: string}

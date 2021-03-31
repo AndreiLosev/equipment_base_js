@@ -1,4 +1,4 @@
-import {DB} from './app/controllers/sql'
+import {DB} from './lib/sql'
 import sqlite from 'better-sqlite3'
 import {TEquipment} from './app/models'
 
