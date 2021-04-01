@@ -11,11 +11,19 @@ export const logging = (try_path: string, catch_path: string) =>
         }
         
         try {
-            if (res.statusCode === 200) {
-                await appendFile(try_path, `${JSON.stringify(text)}\n`)
-                console.log(text)
+            if (res.statusCode <= 400) {
+                await appendFile(
+                    try_path,
+                    `${JSON.stringify({...text, Respons: res.locals.last_send as unknown})}\n`,
+                )
             } else {
-                await appendFile(catch_path, `${JSON.stringify({...text})}\n`)
+                await appendFile(
+                    catch_path,
+                    `${JSON.stringify({
+                        ...text,
+                        Respons: {err: (res.locals.last_send as Error).message},
+                    })}\n`,
+                )
             }
         } catch (err) {
             console.log('err:', err)

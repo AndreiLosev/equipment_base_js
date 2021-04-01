@@ -1,3 +1,5 @@
+import {DB} from '../lib/sql'
+
 export type TEquipment = {
     id: number,
     No: number,
@@ -39,3 +41,6 @@ export type Search_by_str = {
     column: typeof StrKeys[number],
     pattern: string
 }
+
+export type Appkeys = 'connect_db'
+export type AppValue = DB
