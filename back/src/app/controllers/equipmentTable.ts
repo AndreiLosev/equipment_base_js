@@ -1,27 +1,33 @@
-import {Request, Response} from 'express'
+import {Request, Response, NextFunction} from 'express'
 import {DB} from '../../lib/sql'
 import {TEquipment, TatableName, Search_by_num, Search_by_str} from '../models'
 import {Result} from '../../lib/result'
 
+
 export class EquipmentTable {
 
-    private static sender = <T>(res: Response, sql_result: Result<T>) => {
+    private static sender = <T>(res: Response, sql_result: Result<T>, next?: NextFunction) => {
         if (sql_result.isOk()) res.status(200).json(sql_result.get_as_Ok())
-        else res.status(500).json({err: sql_result.get_as_Err()})   
+        else res.status(500).json({err: sql_result.get_as_Err().message})   
+        if (next) next()
     }
 
-    static create_table = (conn: DB) =>
-        (req: Request<unknown, unknown, unknown, TatableName>, res: Response<null>) => {
-            EquipmentTable.sender(res, conn.create_table(req.query.table_name))
-        }
+    static create_table = (conn: DB) => (
+        req: Request<unknown, unknown, unknown, TatableName>,
+        res: Response<null>, next: NextFunction,
+    ) => {
+            EquipmentTable.sender(res, conn.create_table(req.query.table_name), next)
+    }
 
-    static get_tabels = (conn: DB) => (req: Request, res: Response<string[]>) => {
-        EquipmentTable.sender(res, conn.get_tables())
+    static get_tabels = (conn: DB) => (
+        req: Request, res: Response<string[]>, next: NextFunction,
+    ) => {
+        EquipmentTable.sender(res, conn.get_tables(), next)
     }
 
     static get = (conn: DB) =>
-        (req: Request<unknown, unknown, unknown, TatableName>, res: Response<TEquipment[]>) => {
-            EquipmentTable.sender(res, conn.get(req.query.table_name))
+        (req: Request<unknown, unknown, unknown, TatableName>, res: Response<TEquipment[]>, next: NextFunction) => {
+            EquipmentTable.sender(res, conn.get(req.query.table_name), next)
         }
 
     static set = (conn: DB) =>

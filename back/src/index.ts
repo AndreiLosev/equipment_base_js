@@ -1,7 +1,7 @@
 import expres from 'express'
 import {init_app} from './lib/init_app'
 import {routes} from './routes'
-
+import {shutdown} from './lib/shutdown'
 import {logging} from './app/middleware/log'
 
 
@@ -20,3 +20,5 @@ app.use(logging(log_path, err_log_path))
 const server = app.listen(port, host, () => {
     console.log(`listen ${host}:${port}`)
 })
+
+shutdown(server, conn)
