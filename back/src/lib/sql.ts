@@ -107,5 +107,9 @@ export class DB {
             ).all() as TEquipment[]
         })
     }
+
+    public close() {
+        this.db.close()
+    }
 }
  
