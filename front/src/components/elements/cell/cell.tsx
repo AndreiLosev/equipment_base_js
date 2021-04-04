@@ -3,13 +3,14 @@ import s from './cell.module.scss'
 
 
 type HeaderCellProps = {
-    value: string | JSX.Element,
+    value: string,
     width: number,
     visible: boolean,
     height: number,
 }
 
 type SearchCellProps = HeaderCellProps & {
+    heandler: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
 }
 
 export const HeaderCell: React.FC<HeaderCellProps> = ({value, width, visible}) => {
@@ -20,10 +21,12 @@ export const HeaderCell: React.FC<HeaderCellProps> = ({value, width, visible}) =
     </>
 }
 
-export const SearchCell: React.FC<SearchCellProps> = ({value, width, visible, height}) => {
+export const SearchCell: React.FC<SearchCellProps> = ({value, width, visible, height, heandler}) => {
     return <>
         {visible ? <div className={s.SearchCell} style={{width: `${width}%`}}>
-            <textarea className={s.Cell_value} style={{height: height * 17}}>{value}</textarea>
+            <textarea
+                className={s.Cell_value} style={{height: height * 17}}
+                onChange={heandler} value={value}/>
         </div> : null}
     </>
 }

@@ -4,8 +4,8 @@ import {TableReduser} from '../stateSlices/tableState'
 
 export const store = configureStore({
   reducer: {
-    navigation: NavReduser,
     tableState: TableReduser,
+    navigation: NavReduser,
   },
 })
 

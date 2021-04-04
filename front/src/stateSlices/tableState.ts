@@ -5,13 +5,13 @@ import {AppThunk} from '../app/store'
 const initialState = {
     columns: [
         { width: 3, visible: true },
-        { width: 12, visible: false },
+        { width: 12, visible: true },
         { width: 11, visible: true },
-        { width: 9, visible: false },
-        { width: 7, visible: true },
-        { width: 7, visible: true },
-        { width: 7, visible: true },
-        { width: 3, visible: true },
+        { width: 9, visible: true },
+        { width: 8, visible: true },
+        { width: 8, visible: true },
+        { width: 8, visible: true },
+        { width: 4, visible: true },
         { width: 10, visible: true },
         { width: 9, visible: true },
         { width: 9, visible: true },
@@ -43,17 +43,19 @@ const tableSlice = createSlice({
             state.columns[action.payload.column].visible = action.payload.visible
         },
         set_value: (state, action: PayloadAction<{row: number, column: number, value: string}>) => {
+            console.log('chech')
             state.text[action.payload.row][action.payload.column] = action.payload.value
         },
     },
 })
 
-const change_cell = (value: string, row: number, column: number): AppThunk => (dispatch, getState) => {
+export const change_cell = (value: string, row: number, column: number): AppThunk => (dispatch, getState) => {
     const pixel_per_char = 7.4
     const windiw_wodth_on_px = document.documentElement.clientWidth
     const cell_len_on_px = getState().tableState.columns[column].width * windiw_wodth_on_px / 100
+    const rows_height = getState().tableState.rows_height[row]
     const value_len_on_px = value.length * pixel_per_char
-    if (cell_len_on_px < value_len_on_px) {
+    if (cell_len_on_px * rows_height < value_len_on_px) {
         const height = getState().tableState.rows_height[row] + 1
         dispatch(tableSlice.actions.set_rows_height({row, height}))
     }
@@ -61,6 +63,7 @@ const change_cell = (value: string, row: number, column: number): AppThunk => (d
 }
 
 export const TableActtion = {
-    change_cell, ...tableSlice.actions
+    change_cell, ...tableSlice.actions,
 }
+
 export const TableReduser = tableSlice.reducer
