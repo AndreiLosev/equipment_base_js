@@ -6,11 +6,11 @@ import {NavActtion} from '../../stateSlices/navigations'
 
 
 
-export const NavBar: React.FC = () => {
+export const NavBar = () => {
     const nav = useAppSelector(state => state.navigation)
     const dispatch = useAppDispatch()
     const data = {
-        table: "Таблица",
+        table: "Таблица", 
         doc: "Документ",
         card: "Карточка",
         log: "logs",

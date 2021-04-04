@@ -1,0 +1,21 @@
+.SquareButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background-color: #19aa8d;
+    color: #fff;
+    cursor: pointer;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;     
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    border-radius: 7px;
+    font-size: 23px
+};
+
+.SquareButton:active { box-shadow: inset 1px 1px 10px -1px };

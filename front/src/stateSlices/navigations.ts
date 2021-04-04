@@ -7,14 +7,14 @@ const initialState = {
     card: false,
 }
 
-type TinistState = typeof initialState
+type page = keyof typeof initialState
 
 const navigationSlice = createSlice({
     name: 'navigation',
     initialState,
     reducers: {
-        goTo: (state, action: PayloadAction<keyof TinistState>) => {
-            (Object.keys(state) as (keyof TinistState)[]).forEach(key => {
+        goTo: (state, action: PayloadAction<page>) => {
+            (Object.keys(state) as page[]).forEach(key => {
                 state[key] = false
             })
             state[action.payload] = true

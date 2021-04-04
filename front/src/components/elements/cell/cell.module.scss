@@ -1,0 +1,32 @@
+@mixin cell($margin) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: $margin;
+}
+
+
+.HeaderCell {
+    @include cell(3px);
+    text-align: center;
+    font-weight: bold;
+    font-size: small;
+    border-left: 1px #fff solid;
+}
+
+.SearchCell {
+    @include cell(0px);
+    border-left: 3px #fff solid;
+    padding-left: 2px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+.Cell_value {
+    width: 100%;
+    height: 100%;
+    resize: none;
+    text-align: center;
+    font-size: small;
+    overflow: hidden;
+}
