@@ -5,30 +5,32 @@ import {AppThunk} from '../app/store'
 const initialState = {
     columns: [
         { width: 3, visible: true },
-        { width: 12, visible: true },
         { width: 11, visible: true },
-        { width: 9, visible: true },
-        { width: 8, visible: true },
-        { width: 8, visible: true },
-        { width: 8, visible: true },
-        { width: 4, visible: true },
         { width: 10, visible: true },
+        { width: 8, visible: true },
+        { width: 7, visible: true },
+        { width: 7, visible: true },
+        { width: 7, visible: true },
+        { width: 4, visible: true },
         { width: 9, visible: true },
+        { width: 8, visible: true },
+        { width: 8, visible: true },
         { width: 9, visible: true },
         { width: 9, visible: true },
     ],
     rows_height: [1, 1],
-    text: [
-        [
+    text: {
+        header_actual: [
             "№ п/п", "Наименование документа (дела)", "Производитель",
             "Где проводилась к/п/а", "Стоимость к/п/а", "Заводской номер",
-            "Инвентарный номер", "к/п/а", "№ свидет. аттестата", "Дата поверки/калибровки",
-            "Проверка манометров предприятия", "Дата следующей поверки/калибровки",
+            "Инвентарный номер", "к/п/а", "№ свидет. аттестата",
+            "Дата поверки/калибровки", "Проверка манометров предприятия",
+            "Дата следующей поверки/калибровки", "Примечания",
         ],
-        [
-            '', '', '', '', '', '', '', '', '', '', '', '',
+        search_actual: [
+            "", "", "", "", "", "", "", "", "",  "",  "", "",  "",
         ],
-    ],
+    },
 }
 
 
@@ -43,7 +45,6 @@ const tableSlice = createSlice({
             state.columns[action.payload.column].visible = action.payload.visible
         },
         set_value: (state, action: PayloadAction<{row: number, column: number, value: string}>) => {
-            console.log('chech')
             state.text[action.payload.row][action.payload.column] = action.payload.value
         },
     },

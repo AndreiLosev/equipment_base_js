@@ -11,6 +11,7 @@ export type TEquipment = {
     doc_title: string,
     manufacturer: string | null,
     validation_place: string | null,
+    factory_number: string | null,
     inventory_number: string,
     k_v_a: string | null,
     no_certificate: string | null,

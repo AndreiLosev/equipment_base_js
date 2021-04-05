@@ -43,6 +43,7 @@ export class DB {
                     "doc_title" TEXT NOT NULL,
                     "manufacturer" TEXT,
                     "validation_place" TEXT,
+                    "factory_number" TEXT,
                     "inventory_number" TEXT NOT NULL,
                     "k_v_a" TEXT,
                     "no_certificate" TEXT,
