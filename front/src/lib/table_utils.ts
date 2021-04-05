@@ -35,9 +35,12 @@ export class TableUtils {
     }
 
     static array_to_object = (array: string[], key: string) => {
-        const [id, acttual] = key.split('_')
+        const [id, acttual] = key.split('_').map(i => parseInt(i))
         return {
-            id, acttual, No: parseInt(array[0]),
+            id, acttual, No: parseInt(array[0]), doc_title: array[1], 
+            manufacturer: array[2] ? array[2] : null,
+            validation_place: array[3] ? array[3] : null,
+            validation_cost: array[4] ? array[4] : null,
         }
         
 
