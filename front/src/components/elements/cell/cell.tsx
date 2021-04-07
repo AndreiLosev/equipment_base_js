@@ -1,16 +1,17 @@
 import React from 'react'
 import s from './cell.module.scss'
+import cn from 'classnames'
+import TextareaAutosize from 'react-textarea-autosize'
 
 
 type HeaderCellProps = {
     value: string,
     width: number,
     visible: boolean,
-    height: number,
 }
 
 type SearchCellProps = HeaderCellProps & {
-    heandler: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
+    heandler: (e: React.ChangeEvent<HTMLTextAreaElement>) => void,
 }
 
 export const HeaderCell: React.FC<HeaderCellProps> = ({value, width, visible}) => {
@@ -21,12 +22,12 @@ export const HeaderCell: React.FC<HeaderCellProps> = ({value, width, visible}) =
     </>
 }
 
-export const SearchCell: React.FC<SearchCellProps> = ({value, width, visible, height, heandler}) => {
+export const SearchCell: React.FC<SearchCellProps> = ({value, width, visible, heandler}) => {
     return <>
-        {visible ? <div className={s.SearchCell} style={{width: `${width}%`}}>
-            <textarea
-                className={s.Cell_value} style={{height: height * 17}}
-                onChange={heandler} value={value}/>
+        {visible ? <div className={cn(s.SearchCell)} style={{width: `${width}%`}}>
+            <TextareaAutosize
+                className={s.Cell_value}
+                onChange={heandler} value={value} />
         </div> : null}
     </>
 }

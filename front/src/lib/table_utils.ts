@@ -13,20 +13,24 @@ export class TableUtils {
     static objects_to_arrays = (objects: TEquipment[]) => {
         return objects.reduce((acc, item) => {
             return {...acc, [`${item.id}_${item.actual}`]: [
-                item.No.toString(), item.doc_title,
+                item.No.toString(),
+                item.doc_title,
                 item.manufacturer ? item.manufacturer : '',
                 item.validation_place ? item.validation_place : '',
-                item.validation_cost ? item.validation_cost.toString() : '',
+                item.validation_cost !== null
+                    ? TableUtils.validation_cost_to_str(item.validation_cost)
+                    : '',
                 item.factory_number ? item.factory_number : '',
-                item.inventory_number, item.k_v_a ? item.k_v_a : '',
+                item.inventory_number,
+                item.k_v_a ? item.k_v_a : '',
                 item.no_certificate ? item.no_certificate : '',
-                item.last_verification_date
+                item.last_verification_date !== null
                     ? new Date(item.last_verification_date).toLocaleDateString()
                     : '',
-                item.checking_manometers
+                item.checking_manometers !== null
                     ? new Date(item.checking_manometers).toLocaleDateString()
                     : '',
-                item.next_verification_date
+                item.next_verification_date !== null
                     ? new Date(item.next_verification_date).toLocaleDateString()
                     : '',
                 item.notes ? item.notes : ''
@@ -40,10 +44,42 @@ export class TableUtils {
             id, acttual, No: parseInt(array[0]), doc_title: array[1], 
             manufacturer: array[2] ? array[2] : null,
             validation_place: array[3] ? array[3] : null,
-            validation_cost: array[4] ? array[4] : null,
+            validation_cost: array[4] ? TableUtils.str_to_validation_cost(array[4]) : null,
+            factory_number: array[5] ? array[5] : null,
+            inventory_number: array[6],
+            k_v_a: array[7] ? array[7] : null,
+            no_certificate: array[8] ? array[8] : null,
+            last_verification_date: array[9]
+                ? TableUtils.str_date_to_number(array[9])
+                : null,
+            checking_manometers: array[10]
+                ? TableUtils.str_date_to_number(array[10])
+                : null,
+            next_verification_date: array[11]
+                ? TableUtils.str_date_to_number(array[11])
+                : null,
+            notes: array[12] ? array[12] : null
         }
         
 
+    }
+
+    static validation_cost_to_str = (validation_cost: number) => {
+        const str = validation_cost.toString()
+        const len = str.length
+        const integer = str.slice(0, len -2)
+        const fractional = str.slice(len - 2)
+        return `${integer},${fractional}`
+    }
+
+    static str_to_validation_cost = (validation_cost: string) => {
+        const [integer, fractional] = validation_cost.split(',').map(i => parseInt(i))
+        return integer * 100 + fractional
+    }
+
+    static str_date_to_number = (str_loacl_date: string) => {
+        const [day, month, year] = str_loacl_date.split('.').map(i => parseInt(i))
+        return +new Date(year, month - 1, day)
     }
     
 }

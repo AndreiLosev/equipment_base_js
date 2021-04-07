@@ -4,36 +4,38 @@ import {HeaderCell, SearchCell} from '../../../elements/cell/cell'
 import{TableUtils} from '../../../../lib/table_utils'
 import {TableActtion} from '../../../../stateSlices/tableState'
 import {useAppDispatch} from '../../../../app/hooks'
+import cn from 'classnames'
 
 
 type Props = {
     type: 'header' | 'search' | 'other',
-    row_number: number,
+    row: string,
     text: string[],
     columns: {
         width: number,
         visible: boolean,
     }[],
-    rows_height: number,
+    backgroundColor: string;
 }
 
-export const Row: React.FC<Props> = ({type, row_number, text, columns, rows_height}) => {
+export const Row: React.FC<Props> = ({type, row, text, columns, backgroundColor}) => {
     const dispatch = useAppDispatch()
-    return <div className={s.Row}>
+    return <div className={cn(s.Row)} style={{backgroundColor: backgroundColor}}>
         {type === 'header'
             ? TableUtils.column_width(columns).map((item, i) =>
                 <HeaderCell
-                    value={text[i]} width={item.width} key={`${row_number} ${i}`}
-                    visible={item.visible} height={rows_height}
+                    value={text[i]} width={item.width} key={i}
+                    visible={item.visible}
                 />)
             : null}
         {type === 'search'
             ? TableUtils.column_width(columns).map((item, i) =>
                 <SearchCell 
-                    value={text[i]} width={item.width} key={`${row_number} ${i}`}
-                    visible={item.visible} height={rows_height} 
-                    heandler={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                        dispatch(TableActtion.change_cell(e.target.value, row_number, i))}
+                    value={text[i]} width={item.width} key={i}
+                    visible={item.visible}
+                    heandler={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                        dispatch(TableActtion.set_value({row, column: i, value: e.target.value}))
+                    }}
                 />)
             : null}
     </div>

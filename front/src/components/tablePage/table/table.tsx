@@ -4,9 +4,15 @@ import {Row} from './row/row'
 import {useAppSelector} from '../../../app/hooks'
 
 export const Table = () => {
-    const {rows_height, text, columns} = useAppSelector(state => state.tableState)
+    const {rows_color, text, columns} = useAppSelector(state => state.tableState)
     return <div className={s.Table}>
-        <Row type="header" row_number={0} text={text[0]} columns={columns} rows_height={rows_height[0]}/>
-        <Row type="search" row_number={1} text={text[1]} columns={columns} rows_height={rows_height[1]}/>
+        <Row
+            type="header" row={'header'} text={text['header']}
+            columns={columns} backgroundColor={rows_color['header']}
+        />
+        <Row
+            type="search" row={'search'} text={text['search']}
+            columns={columns} backgroundColor={rows_color['search']}
+        />
     </div>
 }
