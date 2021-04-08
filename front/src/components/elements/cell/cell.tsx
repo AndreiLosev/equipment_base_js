@@ -2,6 +2,7 @@ import React from 'react'
 import s from './cell.module.scss'
 import cn from 'classnames'
 import TextareaAutosize from 'react-textarea-autosize'
+import Inputmask from "inputmask"
 
 
 type HeaderCellProps = {
@@ -12,6 +13,7 @@ type HeaderCellProps = {
 
 type SearchCellProps = HeaderCellProps & {
     heandler: (e: React.ChangeEvent<HTMLTextAreaElement>) => void,
+    mask: string,
 }
 
 export const HeaderCell: React.FC<HeaderCellProps> = ({value, width, visible}) => {
@@ -22,11 +24,17 @@ export const HeaderCell: React.FC<HeaderCellProps> = ({value, width, visible}) =
     </>
 }
 
-export const SearchCell: React.FC<SearchCellProps> = ({value, width, visible, heandler}) => {
+export const SearchCell: React.FC<SearchCellProps> = ({value, width, visible, mask, heandler}) => {
+    const ref_for_mask = React.useRef<HTMLTextAreaElement>(null)
+    React.useEffect(() => {
+        const input_mask = new Inputmask(mask)
+        if (ref_for_mask.current instanceof HTMLTextAreaElement)
+            input_mask.mask(ref_for_mask.current)
+    }, [ref_for_mask, mask])
     return <>
         {visible ? <div className={cn(s.SearchCell)} style={{width: `${width}%`}}>
             <TextareaAutosize
-                className={s.Cell_value}
+                className={s.Cell_value} ref={ref_for_mask}
                 onChange={heandler} value={value} />
         </div> : null}
     </>

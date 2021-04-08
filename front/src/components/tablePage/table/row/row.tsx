@@ -14,6 +14,7 @@ type Props = {
     columns: {
         width: number,
         visible: boolean,
+        mask: string,
     }[],
     backgroundColor: string;
 }
@@ -32,7 +33,7 @@ export const Row: React.FC<Props> = ({type, row, text, columns, backgroundColor}
             ? TableUtils.column_width(columns).map((item, i) =>
                 <SearchCell 
                     value={text[i]} width={item.width} key={i}
-                    visible={item.visible}
+                    visible={item.visible} mask={item.mask}
                     heandler={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
                         dispatch(TableActtion.set_value({row, column: i, value: e.target.value}))
                     }}

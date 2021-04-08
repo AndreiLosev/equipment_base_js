@@ -5,6 +5,7 @@ import {useAppSelector} from '../../../app/hooks'
 
 export const Table = () => {
     const {rows_color, text, columns} = useAppSelector(state => state.tableState)
+    console.log(text)
     return <div className={s.Table}>
         <Row
             type="header" row={'header'} text={text['header']}
@@ -12,7 +13,8 @@ export const Table = () => {
         />
         <Row
             type="search" row={'search'} text={text['search']}
-            columns={columns} backgroundColor={rows_color['search']}
+            columns={columns.map(i => ({...i, mask: i.mask ? `[<|=|>] ${i.mask}` : ''}))}
+            backgroundColor={rows_color['search']}
         />
     </div>
 }
