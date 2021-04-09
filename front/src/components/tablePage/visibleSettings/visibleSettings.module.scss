@@ -1,0 +1,26 @@
+.VisibleSettings {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+}
+
+.title {
+    margin: 10px;
+    align-self: center;
+}
+
+.item {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 5px;
+    justify-content: space-between;
+}
+
+.item:hover {
+    border: 1px #fff solid;
+}
+
+.name {
+    margin-right: 5px;
+}

@@ -5,7 +5,6 @@ import {useAppSelector} from '../../../app/hooks'
 
 export const Table = () => {
     const {rows_color, text, columns} = useAppSelector(state => state.tableState)
-    console.log(text)
     return <div className={s.Table}>
         <Row
             type="header" row={'header'} text={text['header']}

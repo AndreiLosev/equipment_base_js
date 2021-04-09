@@ -1,0 +1,38 @@
+.ModalWindow {
+    display: flex;
+    flex-direction: column;
+    margin: 5%;
+    padding: 25px;
+    position: absolute;
+    z-index: 10;
+    background-color: #19aa8d;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    color: #fff;
+    cursor: pointer;
+}
+
+.closeButton {
+    align-self: flex-end;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    flex: 0 20px;
+    margin-bottom: 15px;
+}
+
+.closeButton:hover {
+    border: 1px #fff solid;    
+}
+
+.closeButton:active {
+    background-color: #fff;
+}
+
+.content {
+    flex: 1 100%;
+}

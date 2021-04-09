@@ -30,6 +30,7 @@ const initialState = {
             "", "", "", "", "", "", "", "", "",  "",  "", "",  "",
         ],
     } as {[row: string]: string[]},
+    visible_settings_show: false,  
 }
 
 
@@ -43,6 +44,9 @@ const tableSlice = createSlice({
         set_value: (state, action: PayloadAction<{row: string, column: number, value: string}>) => {
             state.text[action.payload.row][action.payload.column] = action.payload.value
         },
+        show_visible_settings: (state, action: PayloadAction<boolean>) => {
+            state.visible_settings_show = action.payload
+        }
     },
 })
 
