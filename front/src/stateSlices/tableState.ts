@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 // import {AppThunk} from '../app/store'
+export const VISIBLE_KEY = 'VISIBLE_KEY'
 
 const initialState = {
     columns: [
@@ -38,6 +39,11 @@ const tableSlice = createSlice({
     name: 'table',
     initialState,
     reducers: {
+        add_row: state => {
+            const fake_id = `new_${Date.now()}`
+            state.text = {...state.text, [fake_id]: ["", "", "", "", "", "", "", "", "",  "",  "", "",  "",]}
+            state.rows_color = {...state.rows_color, fake_id: '#f0f0f0'}
+        },
         set_column_visible: (state, action: PayloadAction<{column: number, visible: boolean}>) => {
             state.columns[action.payload.column].visible = action.payload.visible
         },

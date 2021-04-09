@@ -16,6 +16,10 @@ type SearchCellProps = HeaderCellProps & {
     mask: string,
 }
 
+type OtherCellProps = SearchCellProps & {
+
+}
+
 export const HeaderCell: React.FC<HeaderCellProps> = ({value, width, visible}) => {
     return <> 
         {visible ? <div className={s.HeaderCell} style={{width: `${width}%`}}>
@@ -39,3 +43,20 @@ export const SearchCell: React.FC<SearchCellProps> = ({value, width, visible, ma
         </div> : null}
     </>
 }
+
+export const OtherCell: React.FC<OtherCellProps> = ({value, width, visible, mask, heandler}) => {
+    const ref_for_mask = React.useRef<HTMLTextAreaElement>(null)
+    React.useEffect(() => {
+        const input_mask = new Inputmask(mask)
+        if (ref_for_mask.current instanceof HTMLTextAreaElement)
+            input_mask.mask(ref_for_mask.current)
+    }, [ref_for_mask, mask])
+    return <>
+        {visible ? <div className={cn(s.SearchCell)} style={{width: `${width}%`}}>
+            <TextareaAutosize
+                className={s.Cell_value} ref={ref_for_mask}
+                onChange={heandler} value={value} />
+        </div> : null}
+    </>
+}
+

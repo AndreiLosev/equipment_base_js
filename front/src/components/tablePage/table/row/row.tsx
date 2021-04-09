@@ -39,6 +39,16 @@ export const Row: React.FC<Props> = ({type, row, text, columns, backgroundColor}
                     }}
                 />)
             : null}
+        {type === 'other'
+            ? TableUtils.column_width(columns).map((item, i) =>
+                <SearchCell 
+                    value={text[i]} width={item.width} key={i}
+                    visible={item.visible} mask={item.mask}
+                    heandler={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                        dispatch(TableActtion.set_value({row, column: i, value: e.target.value}))
+                    }}
+                />)
+            : null}
     </div>
 }
 
