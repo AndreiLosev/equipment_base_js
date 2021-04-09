@@ -12,12 +12,14 @@
     font-weight: bold;
     margin: 3px;
     border-left: 1px #fff solid;
+    transition: 0.7s
 }
 
 .SearchCell {
     @include cell();
     margin: 0px 3px 0px 3px;
     border-left: 1px #19aa8d solid;
+    transition: 0.7s
 }
 
 .Cell_value {
@@ -28,4 +30,5 @@
     text-align: center;
     font-size: small;
     overflow: hidden;
+    transition: 0.7s
 }
