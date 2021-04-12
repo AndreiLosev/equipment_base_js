@@ -10,9 +10,14 @@ type Props = {
 export const CreateNewTable: React.FC<Props> = ({createNewTable}) => {
     const [tableName, setTableName] = React.useState('')
     return <div className={s.CreateNewTable}>
-        <input type="text" className={s.tableName} value={tableName}
+
+        <input type="text" className={s.tableName}
+            placeholder="название новой таблицы"
+            value={tableName}
             onChange={e => setTableName(e.target.value)}
         />
-        <SquareButton symble="+" clickHeandler={() => createNewTable(tableName)} />
+        <SquareButton symble="+" tip="Создать таблицу"
+            clickHeandler={() => createNewTable(tableName)}
+        />
     </div>
 }

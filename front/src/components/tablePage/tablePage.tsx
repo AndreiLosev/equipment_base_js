@@ -31,7 +31,7 @@ export const TablePage = () => {
             closeHeandler={() => dispatch(TableActtion.show_window(
                 {fild_name: 'visible_new_table_window', visible: false}
             ))}
-            children={CreateNewTable} childrensProps={{}}
+            children={CreateNewTable} childrensProps={{createNewTable: (tableName: string) => console.log('ssss')}}
         />
         <ToolBar />
         <Table />

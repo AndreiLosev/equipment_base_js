@@ -18,6 +18,8 @@ const initialState = {
         { width: 9, visible: true, mask: '99.99.9999' },
         { width: 9, visible: true, mask: '' },
     ],
+    selected_row: '',
+    edit_row: '',
     rows_color: { header: '#19aa8d', search: '#fff'} as {[key: string]: string},
     text: {
         header: [
@@ -44,7 +46,7 @@ const tableSlice = createSlice({
         add_row: state => {
             const fake_id = `new_${Date.now()}`
             state.text = {...state.text, [fake_id]: ["", "", "", "", "", "", "", "", "",  "",  "", "",  "",]}
-            state.rows_color = {...state.rows_color, fake_id: '#f0f0f0'}
+            state.rows_color = {...state.rows_color, [fake_id]: '#cde'}
         },
         set_column_visible: (state, action: PayloadAction<{column: number, visible: boolean}>) => {
             state.columns[action.payload.column].visible = action.payload.visible
@@ -55,6 +57,9 @@ const tableSlice = createSlice({
         show_window: (state, action: PayloadAction<{fild_name: BoolFild, visible: boolean}>) => {
             state[action.payload.fild_name] = action.payload.visible
         },
+        slect_row: (state, action: PayloadAction<string>) => {
+            state.selected_row = action.payload
+        }
     },
 })
 

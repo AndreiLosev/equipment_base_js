@@ -9,11 +9,17 @@ export const ToolBar = () => {
     const loadScan = React.useRef<HTMLInputElement>(null)
     const dispatch = useAppDispatch()
     return <div className={s.ToolBar}>
-        <SquareButton symble="+" tip="Добавить строку"
+        <SquareButton symble="+" tip="Добавить строку" disabled={false}
             clickHeandler={() => dispatch(TableActtion.add_row())}
         />
         <div className={s.space} />
-        <SquareButton symble="&#128396;" clickHeandler={() => null} tip="Редактировать строку"/>
+        <SquareButton symble="&#128396;" clickHeandler={() => null}
+            tip="Редактировать строку"
+        />
+        <div className={s.space} />
+        <SquareButton symble="&#8635;" clickHeandler={() => null}
+            tip="отменить изменения"
+        />
         <div className={s.space} />
         <SquareButton symble="&#128190;" clickHeandler={() => null} tip="Сохранить"/>
         <div className={s.space} />

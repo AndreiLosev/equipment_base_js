@@ -13,7 +13,10 @@ export const Table = () => {
         />
         <Row
             type="search" row={'search'} text={text['search']}
-            columns={columns.map(i => ({...i, mask: i.mask ? `[<|=|>] ${i.mask}` : ''}))}
+            columns={columns.map(i => ({
+                ...i,
+                mask: !(i.mask === '' || i.mask === '[К|П|А]') ? `[<|=|>] ${i.mask}` : i.mask,
+            }))}
             backgroundColor={rows_color['search']}
         />
         {rows.map(item => <Row key={item}
