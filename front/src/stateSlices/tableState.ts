@@ -31,9 +31,11 @@ const initialState = {
             "", "", "", "", "", "", "", "", "",  "",  "", "",  "",
         ],
     } as {[row: string]: string[]},
-    visible_settings_show: false,  
+    visible_settings_show: false,
+    visible_new_table_window: false,
 }
 
+type BoolFild = 'visible_settings_show' | 'visible_new_table_window'
 
 const tableSlice = createSlice({
     name: 'table',
@@ -50,9 +52,9 @@ const tableSlice = createSlice({
         set_value: (state, action: PayloadAction<{row: string, column: number, value: string}>) => {
             state.text[action.payload.row][action.payload.column] = action.payload.value
         },
-        show_visible_settings: (state, action: PayloadAction<boolean>) => {
-            state.visible_settings_show = action.payload
-        }
+        show_window: (state, action: PayloadAction<{fild_name: BoolFild, visible: boolean}>) => {
+            state[action.payload.fild_name] = action.payload.visible
+        },
     },
 })
 

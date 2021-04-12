@@ -27,7 +27,9 @@ export const ToolBar = () => {
         <div className={s.space} />
         <SquareButton
             symble="&#128736;" tip="настройки"
-            clickHeandler={() => dispatch(TableActtion.show_visible_settings(true))}
+            clickHeandler={() => dispatch(TableActtion.show_window(
+                {fild_name: 'visible_settings_show', visible: true},
+            ))}
         />
                 <div className={s.space}/>
         <SquareButton symble="&#10549;" clickHeandler={() => {
@@ -37,5 +39,9 @@ export const ToolBar = () => {
         <input type="file" style={{display: 'none'}} ref={loadScan}/>
         <div className={s.space}/>
         <SquareButton symble="&#8801;" clickHeandler={() => null} tip="Создать карточку"/>
+        <div className={s.space} />
+        <SquareButton symble="T" clickHeandler={() => dispatch(TableActtion.show_window(
+            {fild_name: 'visible_new_table_window', visible: true},
+        ))} tip="Создать таблицу"/>
     </div>
 }

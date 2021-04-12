@@ -5,6 +5,7 @@ const initialState = {
     log: false,
     doc: false,
     card: false,
+    loading: false,
 }
 
 type page = keyof typeof initialState
@@ -18,6 +19,10 @@ const navigationSlice = createSlice({
                 state[key] = false
             })
             state[action.payload] = true
+        },
+
+        show_loading: (state, action: PayloadAction<boolean>) => {
+            state.loading = action.payload
         }
     }
 })
