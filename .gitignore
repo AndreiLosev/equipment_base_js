@@ -16,6 +16,7 @@ front/.pnp
 # production
 front/build
 
+.env
 # misc
 .DS_Store
 .env.local

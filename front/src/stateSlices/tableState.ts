@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-// import {AppThunk} from '../app/store'
+import {AppThunk} from '../app/store'
 export const VISIBLE_KEY = 'VISIBLE_KEY'
 
 const initialState = {
@@ -75,6 +75,8 @@ const tableSlice = createSlice({
         }
     },
 })
+
+// const create
 
 
 export const TableActtion = {
