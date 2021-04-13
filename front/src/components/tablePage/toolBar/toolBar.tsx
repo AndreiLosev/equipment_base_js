@@ -7,7 +7,7 @@ import {TableActtion} from '../../../stateSlices/tableState'
 export const ToolBar = () => {
     const loadTable = React.useRef<HTMLInputElement>(null)
     const loadScan = React.useRef<HTMLInputElement>(null)
-    const {toolbar_disabled} = useAppSelector(state => state.tableState)
+    const {toolbar_disabled, tables} = useAppSelector(state => state.tableState)
     const dispatch = useAppDispatch()
     return <div className={s.ToolBar}>
         <SquareButton symble="+" tip="Добавить строку" disabled={toolbar_disabled}
@@ -64,6 +64,13 @@ export const ToolBar = () => {
             {fild_name: 'visible_new_table_window', visible: true},
         ))} tip="Создать таблицу" disabled={toolbar_disabled} />
         <div className={s.space} />
-
+        <SquareButton symble="&#128270;" clickHeandler={() => null}
+            tip="Поиск" disabled={toolbar_disabled}
+        />
+        <div className={s.space} />
+        <select value={tables.selected} className={s.select_table}
+            onChange={e => dispatch(TableActtion.select_table(e.target.value))}>
+            {tables.all.map(i => <option value={i}>{i}</option>)}
+        </select>
     </div>
 }

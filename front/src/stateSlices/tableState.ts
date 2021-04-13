@@ -3,6 +3,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 export const VISIBLE_KEY = 'VISIBLE_KEY'
 
 const initialState = {
+    tables: {
+        all: [] as string[],
+        selected: '',
+    },
     columns: [
         { width: 3, visible: true, mask: '[9][9][9][9][9]' },
         { width: 12, visible: true, mask: ''},
@@ -65,7 +69,10 @@ const tableSlice = createSlice({
             delete(state.text[state.edit_row])
             state.edit_row = ''
             state.toolbar_disabled = false
-        } 
+        },
+        select_table: (state, action: PayloadAction<string>) => {
+            state.tables.selected = action.payload
+        }
     },
 })
 

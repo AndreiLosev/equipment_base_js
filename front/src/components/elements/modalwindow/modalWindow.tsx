@@ -13,7 +13,7 @@ export const ModalWindow = <T, >(props: React.PropsWithChildren<Props<T>>) => {
     return <>
         {props.visible ? <div className={cn(s.ModalWindow)}>
             <div className={s.closeButton} onClick={props.closeHeandler}>
-                &#65794;
+                &#10006;
             </div>
             <div className={s.content}>
                 <props.children {...props.childrensProps} />
