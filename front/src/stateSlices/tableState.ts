@@ -20,7 +20,7 @@ const initialState = {
     ],
     selected_row: '',
     edit_row: '',
-    rows_color: { header: '#19aa8d', search: '#fff'} as {[key: string]: string},
+    toolbar_disabled: false,
     text: {
         header: [
             "№ п/п", "Наименование документа (дела)", "Производитель",
@@ -46,7 +46,8 @@ const tableSlice = createSlice({
         add_row: state => {
             const fake_id = `new_${Date.now()}`
             state.text = {...state.text, [fake_id]: ["", "", "", "", "", "", "", "", "",  "",  "", "",  "",]}
-            state.rows_color = {...state.rows_color, [fake_id]: '#cde'}
+            state.edit_row = fake_id
+            state.toolbar_disabled = true
         },
         set_column_visible: (state, action: PayloadAction<{column: number, visible: boolean}>) => {
             state.columns[action.payload.column].visible = action.payload.visible
@@ -59,7 +60,12 @@ const tableSlice = createSlice({
         },
         slect_row: (state, action: PayloadAction<string>) => {
             state.selected_row = action.payload
-        }
+        },
+        undo_changes: state => {
+            delete(state.text[state.edit_row])
+            state.edit_row = ''
+            state.toolbar_disabled = false
+        } 
     },
 })
 

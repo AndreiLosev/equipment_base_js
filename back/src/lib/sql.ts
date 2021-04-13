@@ -1,6 +1,6 @@
 import {Database} from 'better-sqlite3'
 import {Result} from './result'
-import {TEquipment, NumKeys, StrKeys} from '../app/models'
+import {TEquipment, NumKeys, StrKeys, TEquipmentKeys} from '../app/models'
 
 export class DB {
     
@@ -90,22 +90,24 @@ export class DB {
         })
     }
 
-    public get_by_num(
-        table_name: string, column: typeof NumKeys[number], mode: '<=' | '>=' | '=', value: number,
+    public get_by(
+        table_name: string,
+        columns_and_conditions: {name: TEquipmentKeys, value: string | number, conditions: '<' | '>' | '=' | ''}[],
     ) {
         return Result.try(() => {
-            return this.db.prepare(
-                `SELECT * FROM ${table_name} WHERE  ${table_name}.${column} ${mode} ${value}`
-            ).all() as TEquipment[]                
-        })
-    }
-
-    public get_by_str(table_name: string, column: typeof StrKeys[number], pattern: string) {
-        return Result.try(() => {
-            console.log({pattern})
-            return this.db.prepare(
-                `SELECT * FROM ${table_name} WHERE ${table_name}.${column} like '%${pattern}%'`
-            ).all() as TEquipment[]
+            const sql_conditions = columns_and_conditions.length !== 0
+                ? columns_and_conditions.reduce((acc, item) => {
+                    if (((v: any) => NumKeys.includes(v))(item.name)) {
+                        const conditions = item.conditions === '=' ? '=' : `${item.conditions}=`
+                        return `${acc} ${table_name}.${item.name} ${conditions} ${item.value} AND`
+                    } else if (((v: any) => StrKeys.includes(v))(item.name)) {
+                        return `${acc} ${table_name}.${item.name} like '%${item.value}%'`
+                    } else {
+                        throw new Error(`${item.name}??? -> there are no such columns in the table`)
+                    }
+                }, 'WHERE ').slice(0, -3)
+                : ''
+            return this.db.prepare(`SELECT * FROM ${table_name} ${sql_conditions}`).all() as TEquipment[]
         })
     }
 

@@ -30,18 +30,15 @@ export const StrKeys = [
 
 export type TatableName = {table_name: string}
 
-export type Search_by_num = {
+export type Search_by = {
     table_name: string,
-    column: typeof NumKeys[number],
-    mode: '<=' | '>=' | '=',
-    value: number,
+    columns_and_conditions: {
+        name: TEquipmentKeys,
+        value: string | number,
+        conditions: '<' | '>' | '=' | '',
+    }[],
 }
 
-export type Search_by_str = {
-    table_name: string,
-    column: typeof StrKeys[number],
-    pattern: string
-}
 
 export type Appkeys = 'connect_db'
 export type AppValue = DB

@@ -1,6 +1,6 @@
 import {Request, Response, NextFunction} from 'express'
 import {DB} from '../../lib/sql'
-import {TEquipment, TatableName, Search_by_num, Search_by_str} from '../models'
+import {TEquipment, TatableName, Search_by} from '../models'
 import {Result} from '../../lib/result'
 
 
@@ -62,21 +62,13 @@ export class EquipmentTable {
             EquipmentTable.sender(res, conn.delete(req.query.table_name, req.body.id), next)
         }
 
-    static get_by_num = (
-        req: Request<unknown, unknown, unknown, Search_by_num>,
+    static get_by = (
+        req: Request<unknown, unknown, unknown, Search_by>,
         res: Response<TEquipment[]>, next: NextFunction,
     ) => {
             const conn = req.app.locals.connect_db as DB
-            const {table_name, column, value, mode} = req.query
-            EquipmentTable.sender(res, conn.get_by_num(table_name, column, mode, value), next)
+            const {table_name, columns_and_conditions} = req.query
+            EquipmentTable.sender(res, conn.get_by(table_name, columns_and_conditions), next)
         }
 
-    static get_by_str = (
-        req: Request<unknown, unknown, unknown, Search_by_str>,
-        res: Response<TEquipment[]>, next: NextFunction,
-    ) => {
-            const conn = req.app.locals.connect_db as DB
-            const {table_name, column, pattern} = req.query
-            EquipmentTable.sender(res, conn.get_by_str(table_name, column, pattern), next)
-        }
 }

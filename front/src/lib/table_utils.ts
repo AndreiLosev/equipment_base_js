@@ -1,5 +1,3 @@
-
-
 export class TableUtils {
     static column_width = <T extends {width: number, visible: boolean}>(obj: T[]) => {
         const extroLen = obj.reduce((acc, item) => {
@@ -82,6 +80,15 @@ export class TableUtils {
         return +new Date(year, month - 1, day)
     }
     
+    static remove_row = <T>(rows: {[row: string]: T}, row: string) => {
+        return Object.keys(rows).reduce((acc, item) => {
+            if (item === row) {
+                return acc
+            } else {
+                return {...acc, [item]: rows[item]}
+            }
+        }, {})
+    }
 }
 
 // No: "№ п/п",

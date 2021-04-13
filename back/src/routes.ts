@@ -9,6 +9,5 @@ export const routes = (app: express.Express) => {
     app.post('/table', EquipmentTable.set)
     app.put('/table', EquipmentTable.update)
     app.delete('/table', EquipmentTable.del)
-    app.get('/table/from_num', EquipmentTable.get_by_num)
-    app.get('/table/from_str', EquipmentTable.get_by_str)
+    app.get('/table/from_num', EquipmentTable.get_by)
 }
