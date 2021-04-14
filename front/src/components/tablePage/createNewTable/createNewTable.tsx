@@ -20,7 +20,12 @@ export const CreateNewTable: React.FC<{}> = () => {
                 })}
             />
             <SquareButton symble="+" tip="Создать таблицу"
-                clickHeandler={() => dispatch(TableActtion.create_table(tableName))}
+                clickHeandler={() => {
+                    dispatch(TableActtion.create_table(tableName))
+                    dispatch(TableActtion.show_window(
+                        {fild_name: 'visible_new_table_window', visible: false},
+                    ))
+                }}
             />
         </div>
     </div>

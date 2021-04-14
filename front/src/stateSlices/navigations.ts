@@ -6,6 +6,9 @@ const initialState = {
     doc: false,
     card: false,
     loading: false,
+    tost: {
+        type: 'success' as 'success'| 'error',
+    }
 }
 
 type page = keyof typeof initialState
@@ -16,7 +19,9 @@ const navigationSlice = createSlice({
     reducers: {
         goTo: (state, action: PayloadAction<page>) => {
             (Object.keys(state) as page[]).forEach(key => {
-                state[key] = false
+                if (typeof state[key] === 'boolean') {
+                    state[key] = false
+                }
             })
             state[action.payload] = true
         },
