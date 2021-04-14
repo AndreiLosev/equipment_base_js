@@ -1,4 +1,5 @@
-import axios, {AxiosInstance, AxiosResponse} from 'axios'
+import axios from 'axios'
+import {Result} from '../lib/result'
 
 
 const baseURL = () => {
@@ -11,13 +12,16 @@ const baseURL = () => {
     }
 }
 
-class Api {
+export class Api {
     private static api = axios.create({
         baseURL: baseURL(),
+        responseType: 'json',
     })
     
     static create_table = async (table_name: string) => {
-        const response = await Api.api.get<null>('/', { params: { table_name }})
-        return  response.data
+        return await Result.try_for_axios(async () => {
+            const res = await Api.api.post<null>('/create_new_table', { table_name })
+            return res.data
+        })
     }
 }

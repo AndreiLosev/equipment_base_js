@@ -1,5 +1,17 @@
 .CreateNewTable {
     display: flex;    
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    display: flex;
+}
+
+.title {
+    margin: 15px;
+    font-size: 18px;
 }
 
 .tableName {

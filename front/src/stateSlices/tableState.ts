@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import {AppThunk} from '../app/store'
+import {Api} from '../app/api'
 export const VISIBLE_KEY = 'VISIBLE_KEY'
 
 const initialState = {
@@ -76,11 +77,14 @@ const tableSlice = createSlice({
     },
 })
 
-// const create
+const create_table = (table_name: string): AppThunk => async dispatch => {
+    const result = await Api.create_table(table_name)
+    console.log(result)
+}
 
 
 export const TableActtion = {
-    ...tableSlice.actions,
+    ...tableSlice.actions, create_table,
 }
 
 export const TableReduser = tableSlice.reducer

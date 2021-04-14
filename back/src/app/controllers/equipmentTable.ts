@@ -18,11 +18,11 @@ export class EquipmentTable {
     }
 
     static create_table = (
-        req: Request<unknown, unknown, unknown, TatableName>,
+        req: Request<unknown, unknown, TatableName, unknown>,
         res: Response<null>, next: NextFunction,
     ) => {
-            const conn = res.app.locals as DB
-            EquipmentTable.sender(res, conn.create_table(req.query.table_name), next)
+            const conn = res.app.locals.connect_db as DB
+            EquipmentTable.sender(res, conn.create_table(req.body.table_name), next)
     }
 
     static get_tabels = (req: Request, res: Response<string[]>, next: NextFunction) => {
@@ -39,27 +39,27 @@ export class EquipmentTable {
     }
 
     static set = (
-        req: Request<unknown, unknown, TEquipment, TatableName>,
+        req: Request<unknown, unknown, TatableName & {eq: TEquipment}, unknown>,
         res: Response<null>, next: NextFunction,
     ) => {
             const conn = req.app.locals.connect_db as DB
-            EquipmentTable.sender(res, conn.set(req.query.table_name, req.body), next)
+            EquipmentTable.sender(res, conn.set(req.body.table_name, req.body.eq), next)
         }
 
     static update = (
-        req: Request<unknown, unknown, TEquipment, TatableName>,
+        req: Request<unknown, unknown, TatableName & {eq: TEquipment}>,
         res: Response<null>, next: NextFunction
     ) => {
             const conn = req.app.locals.connect_db as DB
-            EquipmentTable.sender(res, conn.update(req.query.table_name, req.body), next)
+            EquipmentTable.sender(res, conn.update(req.body.table_name, req.body.eq), next)
         }
 
     static del = (
-        req: Request<unknown, unknown, {id: number}, TatableName>,
+        req: Request<unknown, unknown, TatableName & {id: number}>,
         res: Response<null>, next: NextFunction,
     ) => {
             const conn = req.app.locals.connect_db as DB
-            EquipmentTable.sender(res, conn.delete(req.query.table_name, req.body.id), next)
+            EquipmentTable.sender(res, conn.delete(req.body.table_name, req.body.id), next)
         }
 
     static get_by = (

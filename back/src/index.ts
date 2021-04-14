@@ -11,7 +11,6 @@ const app = expres()
 app.use(expres.json())
 
 app.use(expres.static(frontend))
-
 routes(app)
 
 app.locals.connect_db = conn
